@@ -1,4 +1,5 @@
 ---
+import { AddToCart } from './react/add-to-cart';
 function formatCurrency(amount: number) {
 	return new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -25,7 +26,7 @@ const shopItems: ShopItem[] = await result.json();
 				<h2>{item.title}</h2>
 				<p>{item.description}</p>
 				<p>{formatCurrency(item.price)}</p>
-				<button type="button">Add to Cart</button>
+				<AddToCart item={item} client:only="react" />
 			</div>
 		))
 	}
