@@ -1,5 +1,5 @@
 import { useStore} from '@nanostores/solid';
-import { $cart as cart, removeItemFromCart, subtotal } from '../stores/cart';
+import { $cart as cart, removeItemFromCart, subtotal } from '../../stores/cart';
 import styles from './cart.module.css';
 import { Show, createSignal } from 'solid-js';
 
