@@ -25,10 +25,11 @@ const navItems = [
 			href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap"
 			rel="stylesheet"
 		/>
+        <link rel="alternate" type="application/rss+xml" href="/rss.xml" title="The sndwch Blog">
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Make great sandwiches at home with sndwch</title>
 	</head>
 	<body>
 		<header>
@@ -38,15 +39,11 @@ const navItems = [
 			</a>
 
 			<nav>
-				{
-					navItems.map((item) => {
-						return <a href={item.path}>{item.label}</a>;
-					})
-				}
+				{navItems.map((item) => <a href={item.path}>{item.label}</a>)}
 			</nav>
 		</header>
 
-		<slot />
+		<main tabindex="-1"><slot /></main>
 
 		<footer>
 			<p>
@@ -61,7 +58,6 @@ const navItems = [
 		</footer>
 	</body>
 </html>
-
 <style is:global>
 	:root {
 		--color-gray-100: hsl(275, 30%, 95%);
@@ -122,7 +118,6 @@ const navItems = [
 		outline-offset: 4px;
 	}
 </style>
-
 <style>
 	header {
 		align-items: baseline;

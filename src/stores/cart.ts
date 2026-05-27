@@ -1,30 +1,30 @@
 import { computed, map } from 'nanostores';
 
-export const cart = map<Record<number, CartStore | undefined>>({});
+export const $cart = map<Record<number, CartItem>>({});
 
 export function addItemToCart(item: ShopItem) {
-	const cartItem = cart.get()[item.id];
-	const quantity = cartItem ? cartItem.quantity : 0;
+    const cartItem = $cart.get()[item.id];
+    const quantity = cartItem ? cartItem.quantity + 1 : 0;
 
-	cart.setKey(item.id, {
-		item,
-		quantity: quantity + 1,
-	});
+    $cart.setKey(item.id, {
+        item,
+        quantity: quantity + 1,
+    });
 }
 
 export function removeItemFromCart(itemId: number) {
-	cart.setKey(itemId, undefined);
+    // @ts-ignore
+    $cart.setKey(itemId, undefined);
 }
 
-export const subtotal = computed(cart, (entries) => {
-	let subtotal = 0;
-	Object.values(entries).forEach((entry) => {
-		if (!entry) {
-			return subtotal;
-		}
+export const subtotal = computed($cart,(entries) => {
+    let subtotal = 0;
 
-		subtotal += entry.quantity * entry.item.price;
-	});
+    Object.values(entries).forEach((entry) => {
+        if(!entry) return;
 
-	return subtotal;
-});
+        subtotal += entry.quantity * entry.item.price;
+    });
+
+    return subtotal;
+})

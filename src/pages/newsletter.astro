@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/page.astro';
 
+export const prerender = false;
+
 let message;
 if (Astro.request.method === 'POST') {
 	try {
@@ -8,7 +10,7 @@ if (Astro.request.method === 'POST') {
 		const name = data.get('name');
 		const email = data.get('email');
 
-		message = `Subscribed as “${name}” with the email ${email}.`;
+		message = `Subscribed as "${name}" with email "${email}".`;
 	} catch (error) {
 		console.error(error);
 	}
@@ -17,25 +19,20 @@ if (Astro.request.method === 'POST') {
 
 <Layout>
 	<h1 class="heading">Get the sndwch newsletter</h1>
-
 	<div class:list={{ success: true, visible: message }}>
-		<p>
-			{message}
-			<a href="/newsletter">start over</a>
-		</p>
+		<p>{message}</p>
+		<a href="/newsletter" class="big-link">Start Over</a>
 	</div>
-
-	<form method="post" class="newsletter">
+	<form method="post" class:list={{ newsletter: true, visible: !message }}>
 		<label for="name">Name</label>
-		<input type="text" id="name" name="name" required />
+		<input type="text" id="name" name="name" autocomplete="name" required />
 
 		<label for="email">Email</label>
-		<input type="email" id="email" name="email" required />
+		<input type="email" id="email" name="email" autocomplete="email" required />
 
-		<button class="big-link">Subscribe</button>
+		<button type="submit" class="big-link">Subscribe</button>
 	</form>
 </Layout>
-
 <style>
 	.heading {
 		text-align: center;
@@ -45,11 +42,15 @@ if (Astro.request.method === 'POST') {
 		background-color: var(--color-gray-100);
 		border: 1px solid var(--color-gray-200);
 		border-radius: 0.125rem;
-		display: flex;
+		display: none;
 		flex-direction: column;
 		margin: 1rem auto;
 		max-width: 400px;
 		padding: 1.5rem 2rem;
+	}
+
+	.newsletter.visible {
+		display: flex;
 	}
 
 	.newsletter label {
@@ -75,11 +76,11 @@ if (Astro.request.method === 'POST') {
 	.success {
 		background-color: hsl(100, 50%, 97%);
 		border-color: hsl(100, 50%, 60%);
-		display: none;
 		padding-block: 0.5rem;
+        text-align: center;
 	}
 
-	.visible {
+	.success.visible {
 		display: block;
 	}
 </style>
