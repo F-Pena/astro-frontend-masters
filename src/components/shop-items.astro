@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { AddToCart } from './react/add-to-cart';
 function formatCurrency(amount: number) {
 	return new Intl.NumberFormat('en-US', {
@@ -8,7 +9,7 @@ function formatCurrency(amount: number) {
 }
 
 const result = await fetch(
-	'https://astro-frontend-masters-api.netlify.app/api/products'
+	'https://astro-frontend-masters-api.netlify.app/api/products',
 );
 
 if (!result.ok) {
@@ -18,8 +19,8 @@ if (!result.ok) {
 const shopItems: ShopItem[] = await result.json();
 
 interface Props {
-    count?: number;
-    addToCart?: boolean;
+	count?: number;
+	addToCart?: boolean;
 }
 
 const { count = Infinity, addToCart = true } = Astro.props;
@@ -29,7 +30,13 @@ const { count = Infinity, addToCart = true } = Astro.props;
 	{
 		shopItems.slice(0, count).map((item) => (
 			<div class="item">
-				<img src={item.image.src} alt={item.image.alt} />
+				<Image
+					src={item.image.src}
+					alt={item.image.alt}
+					width={250}
+					height={250}
+					loading="eager"
+				/>
 				<h2>{item.title}</h2>
 				<p>{item.description}</p>
 				<p>{formatCurrency(item.price)}</p>

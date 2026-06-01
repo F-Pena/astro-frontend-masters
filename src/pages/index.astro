@@ -1,8 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import ShopItems from '../components/shop-items.astro';
+import newsletterImg from '../images/newsletter.jpg';
 import heroImg from '../images/sandwich-hero.jpg';
 import Layout from '../layouts/default.astro';
-import newsletterImg from '../images/newsletter.jpg';
 ---
 
 <Layout>
@@ -14,12 +15,12 @@ import newsletterImg from '../images/newsletter.jpg';
 			</p>
 			<a href="/shop" class="big-link">Shop Sandwich Kits</a>
 		</div>
-		<img
-			src={heroImg.src}
+		<Image
+			src={heroImg}
 			alt=""
 			class="hero-image"
-			loading="eager"
-			decoding="async"
+			priority
+			layout="full-width"
 		/>
 	</section>
 	<section class="block products">
@@ -28,11 +29,11 @@ import newsletterImg from '../images/newsletter.jpg';
 	</section>
 
 	<section class="block newsletter">
-		<img
-			src={newsletterImg.src}
+		<Image
+			src={newsletterImg}
 			alt="a bag with the word sndwch"
 			loading="lazy"
-			decoding="async"
+			layout="full-width" 
 		/>
 		<div class="copy">
 			<h3>Prefer your sandwhiches to go?</h3>
@@ -117,6 +118,7 @@ import newsletterImg from '../images/newsletter.jpg';
 		aspect-ratio: 1;
 		display: none;
 		width: min(30%, 250px);
+		height: auto;
 	}
 
 	.newsletter-form {
